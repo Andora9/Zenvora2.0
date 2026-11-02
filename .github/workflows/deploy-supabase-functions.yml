@@ -18,7 +18,7 @@ jobs:
 
       - name: Set Razorpay secrets
         run: |
-          supabase secrets set --project-ref "$PROJECT_REF" \
+          supabase secrets set --remote="$PROJECT_REF" --yes \
             RAZORPAY_KEY_ID="${{ secrets.RAZORPAY_KEY_ID }}" \
             RAZORPAY_KEY_SECRET="${{ secrets.RAZORPAY_KEY_SECRET }}" \
             RAZORPAY_WEBHOOK_SECRET="${{ secrets.RAZORPAY_WEBHOOK_SECRET }}"
