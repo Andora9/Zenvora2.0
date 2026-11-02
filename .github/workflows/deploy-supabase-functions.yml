@@ -1,32 +1,35 @@
 name: Deploy Supabase Functions
 
-# Mobile se bhi chalega: GitHub app/website > Actions > "Deploy Supabase Functions" > Run workflow
+Mobile se bhi chalega: GitHub app/website > Actions > Deploy Supabase Functions > Run workflow
+
 on:
-  workflow_dispatch:
+workflow_dispatch:
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    env:
-      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-      PROJECT_REF: bpvfbzkefyqocmqdggtb
-    steps:
-      - uses: actions/checkout@v4
-      - uses: supabase/setup-cli@v1
-        with:
-          version: latest
+deploy:
+runs-on: ubuntu-latest
+env:
+SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+PROJECT_REF: bpvfbzkefyqocmqdggtb
 
-      - name: Set Razorpay secrets
-        run: |
-          supabase secrets set --project-ref "$PROJECT_REF" \
-            RAZORPAY_KEY_ID="${{ secrets.RAZORPAY_KEY_ID }}" \
-            RAZORPAY_KEY_SECRET="${{ secrets.RAZORPAY_KEY_SECRET }}" \
-            RAZORPAY_WEBHOOK_SECRET="${{ secrets.RAZORPAY_WEBHOOK_SECRET }}"
+steps:
+  - uses: actions/checkout@v4
 
-      - name: Deploy all functions
-        run: |
-          supabase functions deploy razorpay-checkout --project-ref "$PROJECT_REF"
-          supabase functions deploy razorpay-webhook --project-ref "$PROJECT_REF" --no-verify-jwt
-          supabase functions deploy admin-access-control --project-ref "$PROJECT_REF"
-          supabase functions deploy refund-admin-action --project-ref "$PROJECT_REF"
-          supabase functions deploy return-request --project-ref "$PROJECT_REF"
+  - uses: supabase/setup-cli@v1
+    with:
+      version: latest
+
+  - name: Set Razorpay secrets
+    run: |
+      supabase secrets set --remote="$PROJECT_REF" --yes \
+        RAZORPAY_KEY_ID="${{ secrets.RAZORPAY_KEY_ID }}" \
+        RAZORPAY_KEY_SECRET="${{ secrets.RAZORPAY_KEY_SECRET }}" \
+        RAZORPAY_WEBHOOK_SECRET="${{ secrets.RAZORPAY_WEBHOOK_SECRET }}"
+
+  - name: Deploy all functions
+    run: |
+      supabase functions deploy razorpay-checkout --project-ref "$PROJECT_REF"
+      supabase functions deploy razorpay-webhook --project-ref "$PROJECT_REF" --no-verify-jwt
+      supabase functions deploy admin-access-control --project-ref "$PROJECT_REF"
+      supabase functions deploy refund-admin-action --project-ref "$PROJECT_REF"
+      supabase functions deploy return-request --project-ref "$PROJECT_REF"
