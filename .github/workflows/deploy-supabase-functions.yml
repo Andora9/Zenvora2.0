@@ -18,16 +18,16 @@ jobs:
 
       - name: Set Razorpay secrets
         run: |
-          supabase secrets set --remote="$PROJECT_REF" --yes \
+          supabase secrets set --project-ref "$PROJECT_REF" \
             RAZORPAY_KEY_ID="${{ secrets.RAZORPAY_KEY_ID }}" \
             RAZORPAY_KEY_SECRET="${{ secrets.RAZORPAY_KEY_SECRET }}" \
             RAZORPAY_WEBHOOK_SECRET="${{ secrets.RAZORPAY_WEBHOOK_SECRET }}"
 
       - name: Deploy all functions
         run: |
-          supabase functions deploy razorpay-checkout --project-ref "$PROJECT_REF"
-          supabase functions deploy razorpay-webhook --project-ref "$PROJECT_REF" --no-verify-jwt
-          supabase functions deploy admin-access-control --project-ref "$PROJECT_REF"
-          supabase functions deploy refund-admin-action --project-ref "$PROJECT_REF"
-          supabase functions deploy return-request --project-ref "$PROJECT_REF"
+          supabase functions deploy razorpay-checkout --project-ref "$PROJECT_REF" --yes
+          supabase functions deploy razorpay-webhook --project-ref "$PROJECT_REF" --no-verify-jwt --yes
+          supabase functions deploy admin-access-control --project-ref "$PROJECT_REF" --yes
+          supabase functions deploy refund-admin-action --project-ref "$PROJECT_REF" --yes
+          supabase functions deploy return-request --project-ref "$PROJECT_REF" --yes
           
