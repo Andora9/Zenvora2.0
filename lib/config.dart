@@ -17,8 +17,8 @@ class AppConfig {
 
   // ---------------------------------------------------------------- SUPABASE
   // Supabase > Project Settings > API
-  static const String supabaseUrl = 'https://bpvfbzkefyqocmqdggtb.supabase.co'; // https://xxxxx.supabase.co
-  static const String supabaseAnonKey = 'sb_publishable_WeJBU8u6xUXtXDfwEMRfDg_j_5tgHCn'; // anon public key (service_role KEY KABHI MAT DAALNA)
+  static const String supabaseUrl = 'https://aqrzhdiuagalozehuuzz.supabase.co'; // https://xxxxx.supabase.co
+  static const String supabaseAnonKey = 'sb_publishable_AUjQhQ-_Qxg-DMJrGPd0QA_YmR7M104'; // anon public key (service_role KEY KABHI MAT DAALNA)
 
   // ---------------------------------------------------------------- GOOGLE / FIREBASE
   // Google Cloud OAuth Web Client ID (Supabase Google provider ka Web Client ID).
